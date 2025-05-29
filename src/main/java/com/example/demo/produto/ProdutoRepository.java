@@ -1,4 +1,4 @@
-package produto;
+package com.example.demo.produto;
 
 import java.util.Optional;
 

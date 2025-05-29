@@ -1,40 +1,43 @@
-package produto;
+package com.example.demo.produto;
 
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ProdutoService {
-	@Autowired
-    private ProdutoRepository produtoRepository;
+	
+    private final ProdutoRepository produtoRepository;
+    
+	public ProdutoService(ProdutoRepository produtoRepository) {
+        this.produtoRepository = produtoRepository;
+    }
 
     public List<Produto> getAllProdutos() {
         return produtoRepository.findAll();
     }
 
-    public Optional<Produto> getProdutoById(Integer id) {
-        return produtoRepository.findById(id);
+    public Optional<Produto> getProdutoByCodigoProduto(String codigoProduto) {
+        return produtoRepository.findByCodigoProduto(codigoProduto);
     }
 
     public Produto createProduto(Produto produto) {
-        if (produtoRepository.findByCodigoProduto(produto.getCodigo()).isPresent()) {
-            throw new IllegalArgumentException("Código de produto já existe: " + produto.getCodigo());
+        if (produtoRepository.findByCodigoProduto(produto.getCodigoProduto()).isPresent()) {
+            throw new IllegalArgumentException("Código de produto já existe: " + produto.getCodigoProduto());
         }
         Produto savedProduto = produtoRepository.save(produto);
-        return produtoRepository.findById(savedProduto.getIdProduto()).orElse(savedProduto);
+        return produtoRepository.findByCodigoProduto(savedProduto.getCodigoProduto()).orElse(savedProduto);
     }
     
-    public Optional<Produto> updateProduto(Integer id, Produto updatedProduto) {
-        return produtoRepository.findById(id).map(produto -> {
-            if (updatedProduto.getCodigo() != null) {
-                Optional<Produto> existingProduto = produtoRepository.findByCodigoProduto(updatedProduto.getCodigo());
-                if (existingProduto.isPresent() && !existingProduto.get().getIdProduto().equals(id)) {
-                    throw new IllegalArgumentException("Código de produto já existe: " + updatedProduto.getCodigo());
+    public Optional<Produto> updateProduto(String codigoProduto, Produto updatedProduto) {
+        return produtoRepository.findByCodigoProduto(codigoProduto).map(produto -> {
+            if (updatedProduto.getCodigoProduto() != null) {
+                Optional<Produto> existingProduto = produtoRepository.findByCodigoProduto(updatedProduto.getCodigoProduto());
+                if (existingProduto.isPresent() && !existingProduto.get().getIdProduto().equals(codigoProduto)) {
+                    throw new IllegalArgumentException("Código de produto já existe: " + updatedProduto.getCodigoProduto());
                 }
-                produto.setCodigo(updatedProduto.getCodigo());
+                produto.setCodigoProduto(updatedProduto.getCodigoProduto());
             }
             if (updatedProduto.getMarca() != null) {
                 produto.setMarca(updatedProduto.getMarca());
@@ -63,4 +66,8 @@ public class ProdutoService {
             return produtoRepository.save(produto);
         });
     }
+    
+//    public void deleteProduto(Long id) {
+//        produtoRepository.deleteById(id);
+//    }
 }

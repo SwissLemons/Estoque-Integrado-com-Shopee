@@ -1,4 +1,4 @@
-package produto;
+package com.example.demo.produto;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -8,44 +8,44 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "PRODUTO")
+@Table(name = "produtos")
 public class Produto {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ID_PRODUTO")
+	@Column(name = "idProduto")
     private Integer idProduto;
 
-	@Column(name = "CODIGO")
-	private String codigo;
+	@Column(name = "codigoProduto")
+	private String codigoProduto;
 
-	@Column(name = "MARCA")
+	@Column(name = "marca")
 	private String marca;
 	
-	@Column(name = "MODELO")
+	@Column(name = "modelo")
 	private String modelo;
 	
-	@Column(name = "DESCRICAO")
+	@Column(name = "descricao")
 	private String descricao;
 	
-	@Column(name = "QUANTIDADE_ESTOQUE")
+	@Column(name = "quantidadeEstoque")
 	private Integer quantidadeEstoque;
 	
-	@Column(name = "PRECO_CUSTO")
+	@Column(name = "precoCusto")
 	private Double precoCusto;
 	
-	@Column(name = "PRECO_VENDA")
+	@Column(name = "precoVenda")
 	private Double precoVenda;
 	
-	@Column(name = "IMAGEM_URL")
+	@Column(name = "imagemUrl")
 	private String imagemUrl;
 	
-	@Column(name = "ATIVO")
+	@Column(name = "ativo")
 	private Boolean ativo;
 	
-	@Column(name = "SHOPEE_ITEM_ID")
+	@Column(name = "shopeeItemId")
 	private Integer shopeeItemId;
 	
-	@Column(name = "SHOPEE_VARIATION_ID")
+	@Column(name = "shopeeVariationId")
 	private Integer shopeeVariationId;
 
 	public Integer getIdProduto() {
@@ -56,12 +56,12 @@ public class Produto {
 		this.idProduto = idProduto;
 	}
 
-	public String getCodigo() {
-		return codigo;
+	public String getCodigoProduto() {
+		return codigoProduto;
 	}
 
-	public void setCodigo(String codigo) {
-		this.codigo = codigo;
+	public void setCodigoProduto(String codigoProduto) {
+		this.codigoProduto = codigoProduto;
 	}
 
 	public String getMarca() {
