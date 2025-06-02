@@ -3,6 +3,7 @@ package com.example.demo.produto;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -67,7 +68,10 @@ public class ProdutoService {
         });
     }
     
-//    public void deleteProduto(Long id) {
-//        produtoRepository.deleteById(id);
-//    }
+    public void deleteProduto(String codigoProduto) {
+        Produto produto = produtoRepository.findByCodigoProduto(codigoProduto)
+            .orElseThrow(() -> new EmptyResultDataAccessException("Produto não encontrado", 1));
+        
+        produtoRepository.delete(produto); // deleta com segurança
+    }
 }

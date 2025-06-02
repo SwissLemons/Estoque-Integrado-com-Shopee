@@ -3,8 +3,10 @@ package com.example.demo.produto;
 import java.util.List;
 
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -61,20 +63,20 @@ public class ProdutoController {
         }
     }
     
-//    @DeleteMapping("/{id}")
-//    public ResponseEntity<?> deleteProduto(@PathVariable Long id) {
-//        try {
-//            produtoService.deleteProduto(id); // Lógica de remoção no service
-//            return ResponseEntity.status(HttpStatus.NO_CONTENT).build(); // 204 - Removido com sucesso
-//        } catch (EmptyResultDataAccessException e) {
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-//                    .body("Erro: Produto com ID " + id + " não encontrado.");
-//        } catch (DataIntegrityViolationException e) {
-//            return ResponseEntity.status(HttpStatus.CONFLICT)
-//                    .body("Erro: Não foi possível excluir o produto. Ele pode estar relacionado a outras entidades.");
-//        } catch (Exception e) {
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-//                    .body("Erro inesperado ao excluir produto: " + e.getMessage());
-//        }
-//    }
+    @DeleteMapping("/{codigoProduto}")
+    public ResponseEntity<?> deleteProduto(@PathVariable String codigoProduto) {
+        try {
+            produtoService.deleteProduto(codigoProduto); // Lógica de remoção no service
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build(); // 204 - Removido com sucesso
+        } catch (EmptyResultDataAccessException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Erro: Produto com ID " + codigoProduto + " não encontrado.");
+        } catch (DataIntegrityViolationException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body("Erro: Não foi possível excluir o produto. Ele pode estar relacionado a outras entidades.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Erro inesperado ao excluir produto: " + e.getMessage());
+        }
+    }
 }
